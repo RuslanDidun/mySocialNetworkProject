@@ -1,0 +1,16 @@
+.nav {
+    grid-area: n;
+    background-color: darkgoldenrod;
+    padding: 10px;
+}
+.item a {
+    color: whitesmoke;
+    font-size: 18px;
+    font-family: Futura;
+    text-decoration: none;
+}
+
+.item a .activeLink {
+    color: black;
+}
+
