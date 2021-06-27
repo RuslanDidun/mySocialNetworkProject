@@ -1,32 +1,59 @@
-import React from 'react';
-import {BrowserRouter} from 'react-router-dom';
+import React, {ChangeEvent} from 'react';
 import d from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {DialogsType, MessagesType, RootStateType} from "../../Redux/state";
+import {DialogType, MessagesType, MessageType} from '../../Redux/dialogs-reducer';
 
-type DialogType = {
-    dialogs:Array<DialogsType>
-    messages: Array<MessagesType>
+type DialogsType = {
+    dialogs: Array<DialogType>
+    messages: Array<MessageType>
+    addMessageAC: () => void
+    newMessageBody: string
+    updateMessageAC: (body: string) => void
 }
 
-const Dialogs = (props: DialogType) => {
-    let dialogsElements = props.dialogs.map
-    (d  => <DialogItem name={d.name} id={d.id}/>);   /*метод .мар что бы не дублировать код*/
-    let messagesElements = props.messages.map
-    (m => <Message message={m.message}/>);
+const Dialogs: React.FC<DialogsType> = (props) => {
+
+    let dialogsElements = props.dialogs.map((d: any) => <DialogItem name={d.name}
+                                                                    key={d.id}
+                                                                    id={d.id}/>);   /*метод .мар что бы не дублировать код*/
+
+    let messagesElements = props.messages.map((m: any) => <Message message={m.message}
+                                                                   key={m.id}/>);
+
+    let newMessageBody = props.newMessageBody;
+    let newDialogElement = React.createRef<HTMLTextAreaElement>();
+
+    let sendMessage = () => {
+        props.addMessageAC();
+    }
+
+    let newMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        let body = newDialogElement.current?.value;
+        if (body) {
+            props.updateMessageAC(body)
+        }
+    }
 
     return (
-        <BrowserRouter>
-            <div className={d.dialogs}>
-                <div className={d.dialogsItems}>
-                    {dialogsElements} {/*Вызываем новый массив после .мар*/}
-                </div>
-                <div className={d.messages}>
-                    {messagesElements} {/*Вызываем новый массив после .мар*/}
+        <div className={d.dialogs}>
+            <div className={d.dialogsItems}>
+                {dialogsElements} {/*Вызываем новый массив после .мар*/}
+            </div>
+            <div className={d.messages}>
+                <div>{messagesElements}</div>
+
+                <div>
+                    <div><textarea value={newMessageBody}
+                                   onChange={newMessageChange}
+                                   placeholder='enter your message'> </textarea></div>
+                    <div>
+                        <button onClick={sendMessage}>Send
+                        </button>
+                    </div>
                 </div>
             </div>
-        </BrowserRouter>
+        </div>
     )
 }
 

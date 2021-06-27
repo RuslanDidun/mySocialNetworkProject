@@ -1,14 +1,6 @@
-import React from 'react';
+let initialState = {}
+const sidebarReducer = (state: any = initialState, action: any) => {
 
-let initialState = {
-    friendsList: [
-        {id: 1, name: 'Olga'},
-        {id: 2, name: 'Anna'},
-        {id: 3, name: 'Amanda'}
-    ]
-}
-
-const sidebarReducer = (state=initialState, action) => {
     return state
 }
 
