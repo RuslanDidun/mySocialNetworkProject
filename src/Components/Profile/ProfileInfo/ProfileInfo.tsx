@@ -1,5 +1,7 @@
 import React from 'react';
 import p from './ProfileInfo.module.css';
+import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
+
 
 const ProfileInfo = (props) => {
     if (!props.profile) {
@@ -15,9 +17,15 @@ const ProfileInfo = (props) => {
             <div className={p.descriptionBlock}>
                 <img src={props.profile.photos.large} alt=""/>
                 ava + description
+                <ProfileStatusWithHooks status={props.status}
+                               updateStatus={props.updateStatus}/>
             </div>
         </div>
     )
+}
+
+const Contact = ({contactTitle, contactValue}) => {
+ return <div></div>
 }
 
 export default ProfileInfo;

@@ -1,3 +1,5 @@
+const SEND_MESSAGE = 'SEND_MESSAGE'
+
 export type DialogsPageType = {
     dialogs: DialogsType
     messages: MessagesType

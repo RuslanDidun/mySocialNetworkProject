@@ -1,4 +1,4 @@
-import {usersAPI} from "../api/api";
+import {profileAPI, usersAPI} from "../api/api";
 
 export type ProfilePageType = {
     posts: PostsType
@@ -14,8 +14,13 @@ export type PostType = {
 type AddPostActionType = { type: 'ADD-POST' }
 type RemovePostActionType = { type: 'REMOVE-POST', id: number }
 type UpdateNewPostTextActionType = { type: 'UPDATE-NEW-POST-TEXT', newText: string }
-type SetUserProfileType = {type: 'SET_USER_PROFILE', profile: null}
-type AllActionType = AddPostActionType | RemovePostActionType | UpdateNewPostTextActionType | SetUserProfileType
+type SetUserProfileType = { type: 'SET_USER_PROFILE', profile: null }
+type SetStatusType = { type: 'SET_STATUS', status: string }
+type AllActionType = AddPostActionType
+    | RemovePostActionType
+    | UpdateNewPostTextActionType
+    | SetUserProfileType
+    | SetStatusType
 
 let initialState = {
     posts: [
@@ -24,10 +29,11 @@ let initialState = {
         {id: 3, message: 'How is your snowboard?', likesCount: 15},
     ],
     newPostText: 'Ruslan-Kaban',
-    profile: null
+    profile: null,
+    status: ''
 }
 
-const profileReducer = (state: ProfilePageType = initialState, action: AllActionType): ProfilePageType => {
+const profileReducer = (state: ProfilePageType = initialState, action: AllActionType) => {
     switch (action.type) {
         case 'ADD-POST':
             let stateCopy = {...state};
@@ -51,20 +57,43 @@ const profileReducer = (state: ProfilePageType = initialState, action: AllAction
         case 'SET_USER_PROFILE': {
             return {...state, profile: action.profile}
         }
+        case 'SET_STATUS': {
+            return {
+                ...state,
+                status: action.status
+            }
+        }
         default:
             return state
     }
 }
 
-export const addPost = ():AddPostActionType => ({type: 'ADD-POST'});
-export const removePost = (id:number):RemovePostActionType => ({type: 'REMOVE-POST', id});
-export const updateNewPostText = (newText: string):UpdateNewPostTextActionType => ({type: 'UPDATE-NEW-POST-TEXT', newText});
+export const addPost = (): AddPostActionType => ({type: 'ADD-POST'});
+export const removePost = (id: number): RemovePostActionType => ({type: 'REMOVE-POST', id});
+export const updateNewPostText = (newText: string): UpdateNewPostTextActionType => ({
+    type: 'UPDATE-NEW-POST-TEXT',
+    newText
+});
 export const setUserProfile = (profile) => ({type: 'SET_USER_PROFILE', profile});
+export const setStatus = (status) => ({type: 'SET_STATUS', status});
 
-export const getUserProfileTC = (userId) =>(dispatch) => {
+export const getUserProfileTC = (userId) => (dispatch) => {
     usersAPI.getProfile(userId)
         .then(response => {
             dispatch(setUserProfile(response.data));
+        });
+};
+
+export const getStatusTC = (userId) => (dispatch) => {
+    profileAPI.getStatus(userId)
+        .then(response => {
+            dispatch(setStatus(response.data));
+        });
+};
+export const updateStatusTC = (status) => (dispatch) => {
+    profileAPI.updateStatus(status)
+        .then(response => {
+            dispatch(setStatus(status));
         });
 };
 
