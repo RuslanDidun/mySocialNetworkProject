@@ -1,9 +1,7 @@
-import React from 'react';
-import {NavLink} from 'react-router-dom';
-import s from './Nav.module.css';
-
-import Posts from "../Profile/myPosts /post/Posts";
-import FriendsList from "./myFriends/myFriends";
+import React from 'react'
+import {NavLink} from 'react-router-dom'
+import s from './Nav.module.css'
+import FriendsList from "./myFriends/myFriends"
 
 const Nav = (props) => {
     return <nav className={s.nav}>
@@ -37,4 +35,4 @@ const Nav = (props) => {
     </nav>
 }
 
-export default Nav;
+export default Nav

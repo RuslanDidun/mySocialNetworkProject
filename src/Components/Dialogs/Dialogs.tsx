@@ -1,8 +1,8 @@
-import React, {ChangeEvent} from 'react';
-import d from './Dialogs.module.css';
-import DialogItem from "./DialogItem/DialogItem";
-import Message from "./Message/Message";
-import {DialogType, MessagesType, MessageType} from '../../Redux/dialogs-reducer';
+import React, {ChangeEvent} from 'react'
+import d from './Dialogs.module.css'
+import DialogItem from "./DialogItem/DialogItem"
+import Message from "./Message/Message"
+import {DialogType, MessageType} from '../../Redux/dialogs-reducer'
 
 type DialogsType = {
     dialogs: Array<DialogType>
@@ -16,20 +16,20 @@ const Dialogs: React.FC<DialogsType> = (props) => {
 
     let dialogsElements = props.dialogs.map((d: any) => <DialogItem name={d.name}
                                                                     key={d.id}
-                                                                    id={d.id}/>);   /*метод .мар что бы не дублировать код*/
+                                                                    id={d.id}/>)  /*метод .мар что бы не дублировать код*/
 
     let messagesElements = props.messages.map((m: any) => <Message message={m.message}
-                                                                   key={m.id}/>);
+                                                                   key={m.id}/>)
 
-    let newMessageBody = props.newMessageBody;
-    let newDialogElement = React.createRef<HTMLTextAreaElement>();
+    let newMessageBody = props.newMessageBody
+    let newDialogElement = React.createRef<HTMLTextAreaElement>()
 
     let sendMessage = () => {
-        props.addMessageAC();
+        props.addMessageAC()
     }
 
     let newMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let body = newDialogElement.current?.value;
+        let body = newDialogElement.current?.value
         if (body) {
             props.updateMessageAC(body)
         }
@@ -57,4 +57,4 @@ const Dialogs: React.FC<DialogsType> = (props) => {
     )
 }
 
-export default Dialogs;
+export default Dialogs

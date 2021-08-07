@@ -1,6 +1,6 @@
-import React from 'react';
-import {NavLink} from 'react-router-dom';
-import d from './../Dialogs.module.css';
+import React from 'react'
+import {NavLink} from 'react-router-dom'
+import d from './../Dialogs.module.css'
 
 type DialogsType = {
     name: string

@@ -1,5 +1,5 @@
-import React from 'react';
-import d from './../Dialogs.module.css';
+import React from 'react'
+import d from './../Dialogs.module.css'
 
 type MessageType = {
     message: string

@@ -1,5 +1,5 @@
-import React from 'react';
-import p from './Post.module.css';
+import React from 'react'
+import p from './Post.module.css'
 
 export type PostsType = {
     message: string
@@ -19,5 +19,5 @@ const Posts = (props:PostsType) => {
         </div>
     </div>
 }
-export default Posts;
+export default Posts
 

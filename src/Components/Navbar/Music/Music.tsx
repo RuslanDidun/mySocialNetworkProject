@@ -1,5 +1,4 @@
-import React from "react";
-import m from '/Music.module.css'
+import React from "react"
 
 const Music = () => {
     return (
@@ -9,4 +8,4 @@ const Music = () => {
     )
 }
 
-export default Music;
+export default Music

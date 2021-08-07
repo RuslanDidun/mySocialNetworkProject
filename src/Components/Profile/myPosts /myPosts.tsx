@@ -1,7 +1,7 @@
-import React, {ChangeEvent} from 'react';
-import p from './myPosts.module.css';
-import Posts from "./post/Posts";
-import {PostType} from "../../../Redux/profile-reducer";
+import React, {ChangeEvent} from 'react'
+import p from './myPosts.module.css'
+import Posts from "./post/Posts"
+import {PostType} from "../../../types/types"
 
 type MyPostsType = {
     posts: Array<PostType>
@@ -13,16 +13,16 @@ type MyPostsType = {
 const MyPosts = (props: MyPostsType) => {
 
     const postsElements = props.posts.map(p => <Posts message={p.message}
-                                                      likesCount={p.likesCount}/>);    /*Мапим массив данных (p = posts)*/
+                                                      likesCount={p.likesCount}/>)   /*Мапим массив данных (p = posts)*/
 
     let onAddPost = () => {
-        props.addPost();
+        props.addPost()
     }
 
     let changePost = (e : ChangeEvent<HTMLTextAreaElement>) => {
-        let text = e.currentTarget?.value;
+        let text = e.currentTarget?.value
         if (text)
-        props.updateNewPostText(text);
+        props.updateNewPostText(text)
     }
 
     return (
@@ -45,5 +45,5 @@ const MyPosts = (props: MyPostsType) => {
         </div>
     )
 }
-export default MyPosts;
+export default MyPosts
 

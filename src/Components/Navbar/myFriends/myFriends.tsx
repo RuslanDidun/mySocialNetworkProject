@@ -1,13 +1,11 @@
-import React from 'react';
-import f from "./myFriends.module.css";
-import Posts from "../../Profile/myPosts /post/Posts";
+import React from 'react'
+import f from "./myFriends.module.css"
 
 type PropsType ={
     name: string
 }
 
 const FriendsList = (props:PropsType) => {
-
 
     return (
         <div className={f.item}>
@@ -22,4 +20,4 @@ const FriendsList = (props:PropsType) => {
     )
 }
 
-export default FriendsList;
+export default FriendsList

@@ -1,5 +1,4 @@
-import React from "react";
-import n from '/News.module.css'
+import React from "react"
 
 const News = () => {
     return (
@@ -9,4 +8,4 @@ const News = () => {
     )
 }
 
-export default News;
+export default News
