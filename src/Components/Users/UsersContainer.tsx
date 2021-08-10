@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from "react-redux"
 import {
     follow, requestUsers,
-    toggleFollowingProgress, unfollow, UsersType
+    unfollow, UsersType
 } from "../../Redux/users-reduser"
 import Users from "./Users"
 import {compose} from 'redux'
@@ -25,18 +25,17 @@ type MapStatePropsType = {
     users: Array<UsersType>
     followingInProgress: Array<number>
 }
-
 type MapDispatchPropsType = {
     unfollow: (userId: number) => void
     follow: (userId: number) => void
-    getUsers:(currentPage: number, pageSize: number) => void
-    onPageChanged: (pageNumber: number) => void
-    toggleFollowingProgress: () => void
+    getUsers: (currentPage: number, pageSize: number) => void
 }
+type OwnContainerPropsType = {
+    pageTitle: string
+}
+type ContainerPropsType = MapStatePropsType & MapDispatchPropsType & OwnContainerPropsType
 
-type ContainerProps = MapStatePropsType & MapDispatchPropsType
-
-class UsersContainer extends React.Component<ContainerProps> {
+class UsersContainer extends React.Component<ContainerPropsType> {
     componentDidMount() {
         const {currentPage, pageSize} = this.props;
         this.props.getUsers(currentPage, pageSize)
@@ -50,6 +49,7 @@ class UsersContainer extends React.Component<ContainerProps> {
 
     render() {
         return <>
+            <h2>{this.props.pageTitle}</h2>
             {/*isFetching - загрузочный спиннер */}
             {this.props.isFetching ? <Preloader/> : null}
             <Users totalUserCount={this.props.totalUsersCount}
@@ -65,7 +65,7 @@ class UsersContainer extends React.Component<ContainerProps> {
     }
 }
 
-let mapStateToProps = (state: AppStateType):MapStatePropsType => {
+let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         users: getUsers(state),
         pageSize: getPageSize(state),
@@ -78,9 +78,9 @@ let mapStateToProps = (state: AppStateType):MapStatePropsType => {
 
 
 export default compose(
-    connect<MapStatePropsType,MapDispatchPropsType,AppStateType>(mapStateToProps,
-        {follow, unfollow,
-        toggleFollowingProgress, requestUsers, getUsers: requestUsers})
+    connect<MapStatePropsType, MapDispatchPropsType,AppStateType, OwnContainerPropsType>(
+        mapStateToProps,
+        {follow, unfollow, getUsers: requestUsers})
 )(UsersContainer)
 
 

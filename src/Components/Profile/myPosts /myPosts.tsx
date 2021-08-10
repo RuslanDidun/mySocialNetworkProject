@@ -1,49 +1,42 @@
-import React, {ChangeEvent} from 'react'
-import p from './myPosts.module.css'
+import React from 'react'
+import s from './myPosts.module.css'
 import Posts from "./post/Posts"
 import {PostType} from "../../../types/types"
+import AddPostForm, {AddPostFormValuesType} from "./AddPostForm/AddPostForm";
 
-type MyPostsType = {
+export type MapPropsType = {
     posts: Array<PostType>
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
-    newPostText: string
 }
 
-const MyPosts = (props: MyPostsType) => {
+export type DispatchPropsType = {
+    addPost: (newPostText: string) => void
+}
 
-    const postsElements = props.posts.map(p => <Posts message={p.message}
-                                                      likesCount={p.likesCount}/>)   /*Мапим массив данных (p = posts)*/
 
-    let onAddPost = () => {
-        props.addPost()
-    }
+const MyPosts: React.FC<MapPropsType & DispatchPropsType> = props => {
+    const postsElements =
+        [...props.posts]
+            .reverse()
+            .map(p => <Posts key={p.id}
+                                message={p.message}
+                                likesCount={p.likesCount}/>)   /*Мапим массив данных (p = posts)*/
 
-    let changePost = (e : ChangeEvent<HTMLTextAreaElement>) => {
-        let text = e.currentTarget?.value
-        if (text)
-        props.updateNewPostText(text)
+    let onAddPost = (values: AddPostFormValuesType) => {
+        props.addPost(values.newPostText)
     }
 
     return (
-        <div className={p.postsBlock}>
-            <div>
-                <h4>My Posts</h4>
-                <div>
-                    <div>
-                        <textarea onChange={changePost}
-                                  value={props.newPostText}/>
-
-                    </div>
-                    <button onClick={onAddPost}>Add post
-                    </button>
-                </div>
-                <div className={p.posts}>
-                    {postsElements} {/*Вызываем новый массив после .мар*/}
-                </div>
+        <div className={s.postsBlock}>
+            <h3>My posts</h3>
+            <AddPostForm onSubmit={onAddPost}/>
+            <div className={s.posts}>
+                {postsElements}
             </div>
         </div>
     )
 }
-export default MyPosts
+
+const MyPostsMemorized = React.memo(MyPosts);
+
+export default MyPostsMemorized;
 

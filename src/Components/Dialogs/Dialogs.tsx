@@ -1,39 +1,33 @@
-import React, {ChangeEvent} from 'react'
+import React from 'react'
 import d from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem"
 import Message from "./Message/Message"
-import {DialogType, MessageType} from '../../Redux/dialogs-reducer'
+import {InitialStateType} from '../../Redux/dialogs-reducer'
+import AddMessageForm from "./AddMessageForm/AddMessageForm";
+
 
 type DialogsType = {
-    dialogs: Array<DialogType>
-    messages: Array<MessageType>
-    addMessageAC: () => void
+    dialogsPage: InitialStateType
+    sendMessage: (messageText: string) => void
+}
+
+export type NewMessageFormType = {
     newMessageBody: string
-    updateMessageAC: (body: string) => void
 }
 
 const Dialogs: React.FC<DialogsType> = (props) => {
+    let state = props.dialogsPage
 
-    let dialogsElements = props.dialogs.map((d: any) => <DialogItem name={d.name}
-                                                                    key={d.id}
-                                                                    id={d.id}/>)  /*метод .мар что бы не дублировать код*/
+    let dialogsElements = state.dialogs.map(d => <DialogItem name={d.name}
+                                                             key={d.id}
+                                                             id={d.id}/>)  /*метод .мар что бы не дублировать код*/
+    let messagesElements = state.messages.map(m => <Message message={m.message}
+                                                            key={m.id}/>)
 
-    let messagesElements = props.messages.map((m: any) => <Message message={m.message}
-                                                                   key={m.id}/>)
-
-    let newMessageBody = props.newMessageBody
-    let newDialogElement = React.createRef<HTMLTextAreaElement>()
-
-    let sendMessage = () => {
-        props.addMessageAC()
+    let addNewMessage = (values: NewMessageFormType) => {
+        props.sendMessage(values.newMessageBody)
     }
 
-    let newMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let body = newDialogElement.current?.value
-        if (body) {
-            props.updateMessageAC(body)
-        }
-    }
 
     return (
         <div className={d.dialogs}>
@@ -42,17 +36,8 @@ const Dialogs: React.FC<DialogsType> = (props) => {
             </div>
             <div className={d.messages}>
                 <div>{messagesElements}</div>
-
-                <div>
-                    <div><textarea value={newMessageBody}
-                                   onChange={newMessageChange}
-                                   placeholder='enter your message'> </textarea></div>
-                    <div>
-                        <button onClick={sendMessage}>Send
-                        </button>
-                    </div>
-                </div>
             </div>
+            <AddMessageForm onSubmit={addNewMessage} />
         </div>
     )
 }
