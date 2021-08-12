@@ -1,10 +1,15 @@
+import * as serviceWorker from './serviceWorker'
+
 import React from 'react'
-import './index.css'
 import ReactDOM from 'react-dom'
-import reportWebVitals from './reportWebVitals'
+import './index.css'
 import SamuraiJSApp from "./App"
 
+ReactDOM.render(<SamuraiJSApp/>, document.getElementById('root'))
 
-    ReactDOM.render(<SamuraiJSApp/>, document.getElementById('root'))
 
-reportWebVitals()
+// API
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister()
