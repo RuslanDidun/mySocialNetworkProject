@@ -7,7 +7,7 @@ export const instance = axios.create({
     headers:     {
         "API-KEY": "cb23f35d-ab67-4a69-88b7-8930661a2897"
     }
-});
+})
 
 export enum ResultCodesEnum {
     Success = 0,

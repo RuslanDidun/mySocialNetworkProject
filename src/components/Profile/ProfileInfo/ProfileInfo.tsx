@@ -1,10 +1,10 @@
-import React, {ChangeEvent, useState} from 'react';
-import s from './ProfileInfo.module.css';
-import Preloader from "../../common/Preloader/Preloader";
-import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
-import userPhoto from "../../../assets/images/user.png";
-import ProfileDataForm from "./ProfileDataForm";
-import {ContactsType, ProfileType} from '../../../types/types';
+import React, {ChangeEvent, useState} from 'react'
+import s from './ProfileInfo.module.css'
+import Preloader from "../../common/Preloader/Preloader"
+import ProfileStatusWithHooks from "./ProfileStatusWithHooks"
+import userPhoto from "../../../assets/images/user.png"
+import ProfileDataForm from "./ProfileDataForm"
+import {ContactsType, ProfileType} from '../../../types/types'
 
 type PropsType = {
     profile: ProfileType | null
@@ -25,7 +25,7 @@ const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isOwne
 
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length) {
-            savePhoto(e.target.files[0]);
+            savePhoto(e.target.files[0])
         }
     }
 
@@ -33,15 +33,15 @@ const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isOwne
         // todo: remove then
         saveProfile(formData).then(
             () => {
-                setEditMode(false);
+                setEditMode(false)
             }
-        );
+        )
     }
 
     return (
         <div>
             <div className={s.descriptionBlock}>
-                <img src={profile.photos.large || userPhoto} className={s.mainPhoto}/>
+                <img src={profile.photos.large || userPhoto} className={s.mainPhoto} alt={'profilePhoto'}/>
                 {isOwner && <input type={"file"} onChange={onMainPhotoSelected}/>}
 
                 { editMode
@@ -97,4 +97,4 @@ const Contact: React.FC<ContactsPropsType> = ({contactTitle, contactValue}) => {
     return <div className={s.contact}><b>{contactTitle}</b>: {contactValue}</div>
 }
 
-export default ProfileInfo;
+export default ProfileInfo

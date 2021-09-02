@@ -1,4 +1,4 @@
-import React, {useState, useEffect, ChangeEvent} from 'react';
+import React, {useState, useEffect, ChangeEvent} from 'react'
 
 type PropsType = {
     status: string
@@ -7,24 +7,24 @@ type PropsType = {
 
 const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
 
-    let [editMode, setEditMode] = useState(false);
-    let [status, setStatus] = useState(props.status);
+    let [editMode, setEditMode] = useState(false)
+    let [status, setStatus] = useState(props.status)
 
     useEffect(() => {
-        setStatus(props.status);
-    }, [props.status]);
+        setStatus(props.status)
+    }, [props.status])
 
     const activateEditMode = () => {
-        setEditMode(true);
+        setEditMode(true)
     }
 
     const deactivateEditMode = () => {
-        setEditMode(false);
-        props.updateStatus(status);
+        setEditMode(false)
+        props.updateStatus(status)
     }
 
     const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setStatus(e.currentTarget.value);
+        setStatus(e.currentTarget.value)
     }
 
     return (
@@ -36,7 +36,9 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
             }
             {editMode &&
             <div>
-                <input onChange={onStatusChange} autoFocus={true} onBlur={deactivateEditMode}
+                <input onChange={onStatusChange}
+                       autoFocus={true}
+                       onBlur={deactivateEditMode}
                        value={status}/>
             </div>
             }
@@ -45,4 +47,4 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
 }
 
 
-export default ProfileStatusWithHooks;
+export default ProfileStatusWithHooks

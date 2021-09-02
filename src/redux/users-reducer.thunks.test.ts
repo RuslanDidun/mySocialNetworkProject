@@ -1,6 +1,7 @@
 import {actions, follow, unfollow} from './users-reducer'
 import {usersAPI} from '../api/users-api'
-import {APIResponseType, ResultCodesEnum} from '../api/api'
+import {APIResponseType, ResultCodesEnum} from "../api/api"
+
 
 jest.mock('../api/users-api')
 const userAPIMock = usersAPI as jest.Mocked<typeof usersAPI>
@@ -22,9 +23,8 @@ const result: APIResponseType = {
     data: {}
 }
 
-userAPIMock.follow.mockReturnValue(Promise.resolve(result))
-userAPIMock.unfollow.mockReturnValue(Promise.resolve(result))
-
+userAPIMock.follow.mockReturnValue(Promise.resolve(result));
+userAPIMock.unfollow.mockReturnValue(Promise.resolve(result));
 
 
 test('success follow thunk', async () => {

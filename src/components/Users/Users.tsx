@@ -17,7 +17,6 @@ type PropsType = {
     follow: (userId: number) => void
 }
 
-
 let Users: FC<PropsType> = ({
                                 currentPage, totalUsersCount, pageSize, onPageChanged, users,
                                 ...props
