@@ -2,8 +2,8 @@ import React, {FC} from 'react'
 import Paginator from '../common/Paginator/Paginator'
 import User from './User'
 import {UserType} from '../../types/types'
-import {UsersSearchForm} from './UsersSearchForm'
 import {FilterType} from '../../redux/users-reducer'
+import { UsersSearchForm } from './UsersSearchForm'
 
 type PropsType = {
     totalUsersCount: number

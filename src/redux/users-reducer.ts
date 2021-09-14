@@ -80,13 +80,13 @@ export const actions = {
 }
 
 export const requestUsers = (page: number,
-                             pageSize: number, filter: FilterType): ThunkType => {
+                             pageSize: number, filter: FilterType ): ThunkType => {
     return async (dispatch, getState) => {
         dispatch(actions.toggleIsFetching(true))
         dispatch(actions.setCurrentPage(page))
         dispatch(actions.setFilter(filter))
 
-        let data = await usersAPI.getUsers(page, pageSize, filter.term, filter.friend)
+        let data = await usersAPI.getUsers(page, pageSize, filter.term,filter.friend)
         dispatch(actions.toggleIsFetching(false))
         dispatch(actions.setUsers(data.items))
         dispatch(actions.setTotalUsersCount(data.totalCount))
