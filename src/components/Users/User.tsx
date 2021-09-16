@@ -11,9 +11,11 @@ type PropsType = {
     follow: (userId: number) => void
 }
 
-let User: React.FC<PropsType> = ({user, followingInProgress, unfollow, follow}) => {
+const User: React.FC<PropsType> = ({user, followingInProgress, unfollow, follow}) => {
+
+
     return (
-       <div>
+        <div>
                 <span>
                     <div>
                        <NavLink to={'/profile/' + user.id}>
@@ -25,15 +27,18 @@ let User: React.FC<PropsType> = ({user, followingInProgress, unfollow, follow}) 
                         {user.followed
                             ? <button disabled={followingInProgress
                                 .some(id => id === user.id)}
-                                      onClick={() => { unfollow(user.id) }}>
+                                      onClick={() => {
+                                          unfollow(user.id)
+                                      }}>
                                 Unfollow</button>
                             : <button disabled={followingInProgress.some(id => id === user.id)}
-                                      onClick={() => { follow(user.id) }}>
-                                      Follow</button>}
-
+                                      onClick={() => {
+                                          follow(user.id)
+                                      }}>
+                                Follow</button>}
                     </div>
                 </span>
-                <span>
+            <span>
                     <span>
                         <div>{user.name}</div>
                         <div>{user.status}</div>
@@ -43,7 +48,7 @@ let User: React.FC<PropsType> = ({user, followingInProgress, unfollow, follow}) 
                         <div>{"user.location.city"}</div>
                     </span>
                 </span>
-            </div>)
+        </div>)
 }
 
 export default User

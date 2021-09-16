@@ -3,7 +3,7 @@ import React from 'react'
 import {FilterType} from '../../redux/users-reducer'
 
 const usersSearchFormValidate = (values: any) => {
-    const errors = {values}
+    const errors = {}
     return errors
 }
 

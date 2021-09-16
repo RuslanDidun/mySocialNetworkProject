@@ -2,15 +2,15 @@ import React, {Component} from 'react'
 import './App.css'
 import Navbar from './components/Navbar/Navbar'
 import {BrowserRouter, Redirect, Route, Switch, withRouter} from "react-router-dom"
-import UsersContainer from "./components/Users/UsersContainer"
 import HeaderContainer from "./components/Header/HeaderContainer"
-import LoginPage from "./components/Login/Login"
 import {connect, Provider} from "react-redux"
 import {compose} from "redux"
 import {initializeApp} from "./redux/app-reducer"
 import Preloader from "./components/common/Preloader/Preloader"
 import store, {AppStateType} from "./redux/redux-store"
 import {withSuspense} from "./hoc/withSuspense"
+import {UsersPage} from "./components/Users/UsersContainer"
+import {LoginPage} from "./components/Login/Login";
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'))
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'))
@@ -28,10 +28,12 @@ class App extends Component<MapPropsType & DispatchPropsType> {
     catchAllUnhandledErrors = (e: PromiseRejectionEvent) => {
         alert("Some error occurred")
     }
+
     componentDidMount() {
         this.props.initializeApp()
         window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors)
     }
+
     componentWillUnmount() {
         window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors)
     }
@@ -51,13 +53,13 @@ class App extends Component<MapPropsType & DispatchPropsType> {
                                render={() => <Redirect to={"/profile"}/>}/>
 
                         <Route path='/dialogs'
-                               render={() => <SuspendedDialogs /> }/>
+                               render={() => <SuspendedDialogs/>}/>
 
                         <Route path='/profile/:userId?'
-                               render={() => <SuspendedProfile /> }/>
+                               render={() => <SuspendedProfile/>}/>
 
                         <Route path='/users'
-                               render={() => <UsersContainer pageTitle={"Самураи"}/>}/>
+                               render={() => <UsersPage pageTitle={"Samurais"}/>}/>
 
                         <Route path='/login'
                                render={() => <LoginPage/>}/>
