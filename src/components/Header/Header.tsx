@@ -1,25 +1,35 @@
 import React from 'react'
-import s from './Header.module.css'
-import {NavLink} from "react-router-dom"
+import {Link} from "react-router-dom"
+import {useDispatch, useSelector} from "react-redux";
+import {Avatar, Button} from "antd";
+import {UserOutlined} from "@ant-design/icons";
+import {selectCurrentLogin, selectIsAuth} from "../../redux/auth-selectors";
+import {logout} from '../../redux/auth-reducer';
 
-export type MapPropsType = {
-    isAuth: boolean
-    login: string | null
+export type MapPropsType = {}
+export type DispatchPropsType = {}
+
+export const AppHeader: React.FC<MapPropsType & DispatchPropsType> = (props) => {
+
+
+    const isAuth = useSelector(selectIsAuth)
+    const login = useSelector(selectCurrentLogin)
+    const dispatch = useDispatch()
+    const logoutCallback = () => {
+        dispatch(logout())
+    }
+
+    return <div>
+        {isAuth
+            ? <div>
+                <Avatar style={{backgroundColor: '#87d068'}} icon={<UserOutlined/>}/>
+                {login}<Button onClick={logoutCallback}>Log out</Button>
+            </div>
+            :
+            <Button>
+                <Link to={'/login'}>Login</Link>
+            </Button>
+        }
+    </div>
 }
-export type DispatchPropsType = {
-    logout: () => void
-}
 
-const Header: React.FC<MapPropsType & DispatchPropsType> = (props) => {
-    return <header className={s.header}>
-        <img src='https://www.freelogodesign.org/Content/img/logo-ex-7.png' alt={''} />
-
-        <div className={s.loginBlock}>
-            { props.isAuth
-                ? <div>{props.login} - <button onClick={props.logout}>Log out</button> </div>
-                : <NavLink to={'/login'}>Login</NavLink> }
-        </div>
-    </header>
-}
-
-export default Header

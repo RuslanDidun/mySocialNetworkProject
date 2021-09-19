@@ -12,9 +12,12 @@ import {
     getUsers,
     getUsersFilter
 } from "../../redux/users-selectors"
+import {useHistory} from 'react-router-dom'
+import * as queryString from "querystring";
 
 type PropsType = {}
 
+type QueryParamsType = { term?: string, page?: string, friend?: string };
 export const Users: FC<PropsType> = (props) => {
 
     const users = useSelector(getUsers)
@@ -25,10 +28,47 @@ export const Users: FC<PropsType> = (props) => {
     const followingInProgress = useSelector(getFollowingInProgress)
 
     const dispatch = useDispatch()
+    const history = useHistory()
 
+    //useEffect запрашиваем пользователей
     useEffect(() => {
-        dispatch(requestUsers(currentPage, pageSize, filter))
+        const parsed = queryString.parse(history.location.search.substr(1)) as QueryParamsType
+        let actualPage = currentPage
+        let actualFilter = filter
+
+        if (!!parsed.page) actualPage = Number(parsed.page)
+        if (!!parsed.friend) actualFilter = {...actualFilter, term: parsed.term as string}
+
+        switch (parsed.friend) {
+            case 'null':
+                actualFilter = {...actualFilter, friend: null}
+                break
+            case 'true':
+                actualFilter = {...actualFilter, friend: true}
+                break
+            case 'false':
+                actualFilter = {...actualFilter, friend: false}
+                break
+        }
+        //alternative
+        // if (!parsed.friend) actualFilter = {...actualFilter, friend: parsed.friend === 'null'? null:parsed.friend === 'true'}
+
+        dispatch(requestUsers(actualPage, pageSize, actualFilter))
     }, [])
+
+    // useEffect для синхронизации адрессной строки
+    useEffect(() => {
+
+        const query: QueryParamsType = {}
+        if (!!filter.term) query.term = filter.term
+        if (filter.friend !== null) query.friend = String(filter.friend)
+        if (currentPage !== 1) query.page = String(currentPage)
+
+        history.push({
+            pathname: '/users',
+            search: queryString.stringify(query)
+        })
+    }, [filter, currentPage])
 
     const onPageChanged = (pageNumber: number) => {
         dispatch(requestUsers(pageNumber, pageSize, filter))
