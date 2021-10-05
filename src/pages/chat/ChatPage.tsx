@@ -51,7 +51,17 @@ const Message: React.FC<{ message: ChatMessageType }> = ({message}) => {
 
 
 const MessageForm: React.FC = () => {
+    //дисэйблим кнопку до подключения вебсокета
     const [message, setMessage] = useState('')
+    const [readyStatus, setReadyStatus] = useState<'pending' | 'ready'>('pending')
+
+    useEffect(() => {
+        wsChannel.addEventListener('open', () => {
+            setReadyStatus('ready')
+        })
+    }, [])
+
+
     const sendMessage = () => {
         if (!message) {
             return
@@ -65,7 +75,7 @@ const MessageForm: React.FC = () => {
                   value={message}>
         </textarea>
         <div>
-            <Button onClick={sendMessage}>
+            <Button disabled={readyStatus !== 'ready'} onClick={sendMessage}>
                 send
             </Button>
         </div>
